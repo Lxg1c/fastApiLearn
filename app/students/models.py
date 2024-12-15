@@ -1,13 +1,12 @@
+from sqlalchemy.orm import relationship
 from sqlalchemy import ForeignKey, Text
-from sqlalchemy.orm import relationship, Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column
 from app.database import Base, str_uniq, int_pk, str_null_true
 from datetime import date
 
 
 # создаем модель таблицы студентов
 class Student(Base):
-    __tablename__ = 'students'
-
     id: Mapped[int_pk]
     phone_number: Mapped[str_uniq]
     first_name: Mapped[str]
@@ -17,11 +16,13 @@ class Student(Base):
     address: Mapped[str] = mapped_column(Text, nullable=False)
     enrollment_year: Mapped[int]
     course: Mapped[int]
+    photo: Mapped[str] = mapped_column(Text, nullable=True)
     special_notes: Mapped[str_null_true]
     major_id: Mapped[int] = mapped_column(ForeignKey("majors.id"), nullable=False)
 
     # Определяем отношения: один студент имеет один факультет
     major: Mapped["Major"] = relationship("Major", back_populates="students")
+    extend_existing = True
 
     def __str__(self):
         return (f"{self.__class__.__name__}(id={self.id}, "
@@ -44,4 +45,5 @@ class Student(Base):
             "course": self.course,
             "special_notes": self.special_notes,
             "major_id": self.major_id,
+            'photo': self.photo
         }

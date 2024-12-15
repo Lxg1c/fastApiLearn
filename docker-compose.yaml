@@ -1,16 +1,16 @@
 services:
   postgres:
-    image: postgres:latest
-    container_name: postgres_fast_api
+    image: postgres:15
+    container_name: postgres_vaudience_api
     environment:
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: 22102005n
-      POSTGRES_DB: fast_api
+      POSTGRES_USER: vaudience_admin
+      POSTGRES_PASSWORD: dockerComposePostgres_api
+      POSTGRES_DB: postgres_vaudience_api
       PGDATA: /var/lib/postgresql/data/pgdata
     ports:
       - "5433:5432"
     volumes:
-      - pgdata:/var/lib/postgresql/data/pgdata
+      - postgresdata:/var/lib/postgresql/data/
     deploy:
       resources:
         limits:

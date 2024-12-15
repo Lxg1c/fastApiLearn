@@ -22,7 +22,6 @@ async def update_major(major: SMajorsUpdDesc) -> dict:
     else:
         return {"message": "Ошибка при обновлении описания факультета!"}
 
-
 @router.delete("/delete/{major_id}")
 async def delete_major(major_id: int) -> dict:
     check = await MajorsDAO.delete(id=major_id)
